@@ -20,4 +20,9 @@ class Wish {
 
     return map;
   }
+
+  @override
+  String toString() {
+    return 'id: ${this.id}, content: ${this.content}';
+  }
 }
