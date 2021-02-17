@@ -16,17 +16,45 @@ class _WishListState extends State<WishList> {
     List<Wish> list = [];
     return Container(
       child: Consumer<WishService>(builder: (context, service, child) {
-        service.getWishes().then((value) {
+        var _wishes = service.getWishes().then((value) {
           list = value;
         });
-        return ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            var i = list[index].id;
-            return ListTile(
-              title: Text('${service.getWish(i).then((wish) => wish.content)}'),
-            );
+        return FutureBuilder(
+          future: _wishes,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Container(); //TODO: add error screen
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
+              return ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  var i = list[index].id;
+                  Wish _wish;
+                  return Card(
+                    elevation: 20,
+                    child: ListTile(
+                      title: FutureBuilder(
+                          future: service.getWish(i).then((wish) {
+                            _wish = wish;
+                          }),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Container();
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return Text('${_wish.content}');
+                            }
+                            return Container();
+                          }),
+                    ),
+                  );
+                },
+              );
+            }
+            return Container(); //TODO: add loading screen
           },
         );
       }),
