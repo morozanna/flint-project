@@ -33,8 +33,10 @@ class _WishListState extends State<WishList> {
                   var i = list[index].id;
                   Wish _wish;
                   return Card(
+                    color: Colors.blueGrey[300],
                     elevation: 20,
                     child: ListTile(
+                      contentPadding: EdgeInsets.all(10),
                       title: FutureBuilder(
                           future: service.getWish(i).then((wish) {
                             _wish = wish;
@@ -49,6 +51,10 @@ class _WishListState extends State<WishList> {
                             }
                             return Container();
                           }),
+                      trailing: IconButton(
+                        icon: Icon(Icons.send),
+                        onPressed: () {}, //TODO:add popup to send
+                      ),
                     ),
                   );
                 },
