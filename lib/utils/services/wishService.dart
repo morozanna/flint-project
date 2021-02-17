@@ -6,20 +6,16 @@ class WishService extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future<Wish> getWish(String id) async {
-    var snap = await _db.collection('wishes').doc(id).get();
-
+    var snap = await _db.collection('wishes').doc('wish$id').get();
     return Wish.fromMap(snap.data());
   }
 
   Future<List<Wish>> getWishes() async {
     final List<Wish> list = [];
-    var tmp = await _db.collection('wishes').get().then((querySnapshot) {
+    await _db.collection('wishes').get().then((querySnapshot) {
       querySnapshot.docs.forEach((element) {
-        print(element.data());
         var wish = Wish.fromMap(element.data());
         list.add(wish);
-        print(wish.toString());
-        print(list.length);
       });
       return list;
     });
@@ -27,13 +23,14 @@ class WishService extends ChangeNotifier {
   }
 
   void addWish(Wish wish) {
-    _db.collection('wishes').add(wish.toMap());
+    _db.collection('wishes').doc('wish$wish.id').set(wish.toMap());
+    //.add(wish.toMap());
     notifyListeners();
   }
 
   bool editWish(Wish editedWish) {
     var result = false;
-    _db.collection('wishes').doc(editedWish.id).set(
+    _db.collection('wishes').doc('wish$editedWish.id').set(
         {"content": editedWish.content}, SetOptions(merge: true)).then((_) {
       result = true;
     });
@@ -44,7 +41,7 @@ class WishService extends ChangeNotifier {
 
   bool deleteWish(String id) {
     var result = false;
-    _db.collection('wishes').doc(id).delete().then((_) {
+    _db.collection('wishes').doc('wish$id').delete().then((_) {
       result = true;
     });
     notifyListeners();
