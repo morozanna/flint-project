@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return null;
+          return Container(); //TODO: add error screen
         }
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
             ], child: WishesScreen()),
           );
         }
-        return Container();
+        return Container(); //TODO: add loading screen
       },
     );
   }
