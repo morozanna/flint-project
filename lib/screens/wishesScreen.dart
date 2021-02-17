@@ -12,10 +12,32 @@ class _WishesScreenState extends State<WishesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Wishes List'),
-      ),
-      body: WishList(),
-    );
+        appBar: AppBar(
+          title: Text('Wishes List'),
+        ),
+        body: WishList(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(
+                    heroTag: 'historyBtn',
+                    onPressed: () {},
+                    tooltip: 'Show history',
+                    child: Icon(Icons.history),
+                  ),
+                  FloatingActionButton(
+                    heroTag: 'addBtn',
+                    onPressed: () {},
+                    tooltip: 'Add new wish',
+                    child: Icon(Icons.add),
+                  ),
+                ],
+              ),
+            )));
   }
 }
