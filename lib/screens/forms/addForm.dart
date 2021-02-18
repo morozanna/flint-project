@@ -31,29 +31,10 @@ class AddForm extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        print('działa?');
                         var service =
                             Provider.of<WishService>(context, listen: false);
                         service.addWish(Wish(content: wishController.text));
                         Navigator.of(context).pop();
-                        // Consumer<WishService>(
-                        //     builder: (context, service, child) {
-                        //   var _addFun =
-                        //       service.addWish(Wish(wishController.text));
-                        //   return FutureBuilder(
-                        //     future: _addFun,
-                        //     builder: (context, snapshot) {
-                        //       if (snapshot.hasError) {
-                        //         return Container(); //TODO: add error screen
-                        //       }
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.done) {
-                        //         Navigator.of(context).pop();
-                        //       }
-                        //       return Container(); //TODO:add loading screen
-                        //     },
-                        //   );
-                        // });
                       }
                     },
                     child: Text(

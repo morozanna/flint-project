@@ -30,31 +30,24 @@ class WishService extends ChangeNotifier {
           .collection('wishes')
           .doc(value.id)
           .set({"id": value.id}, SetOptions(merge: true));
-      print('test');
       return _result;
     });
-    // _db.collection('wishes').doc(wish.id).set(wish.toMap());
-    //.add(wish.toMap());
     notifyListeners();
     return result;
   }
 
-  bool editWish(Wish editedWish) {
-    var result = false;
-    _db.collection('wishes').doc(editedWish.id).set(
-        {"content": editedWish.content}, SetOptions(merge: true)).then((_) {
-      result = true;
-    });
+  Future editWish(Wish editedWish) async {
+    var result = await _db
+        .collection('wishes')
+        .doc(editedWish.id)
+        .set({"content": editedWish.content}, SetOptions(merge: true));
     notifyListeners();
 
     return result;
   }
 
-  bool deleteWish(String id) {
-    var result = false;
-    _db.collection('wishes').doc(id).delete().then((_) {
-      result = true;
-    });
+  Future deleteWish(String id) async {
+    var result = await _db.collection('wishes').doc(id).delete();
     notifyListeners();
 
     return result;
