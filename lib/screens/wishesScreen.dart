@@ -1,3 +1,4 @@
+import 'package:flint_project/screens/forms/addForm.dart';
 import 'package:flint_project/screens/wishList.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,14 @@ class _WishesScreenState extends State<WishesScreen> {
                   ),
                   FloatingActionButton(
                     heroTag: 'addBtn',
-                    onPressed: () {},
+                    onPressed: () {
+                      return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AddForm();
+                        },
+                      );
+                    },
                     tooltip: 'Add new wish',
                     child: Icon(Icons.add),
                   ),
