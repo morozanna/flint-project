@@ -1,14 +1,12 @@
 class Wish {
   String id;
-  String _content;
+  String content;
 
-  Wish(this.id, this._content);
-
-  String get content => _content;
+  Wish({this.id = '', this.content});
 
   Wish.fromMap(dynamic obj) {
     this.id = obj['id'];
-    this._content = obj['content'];
+    this.content = obj['content'];
   }
 
   Map<String, dynamic> toMap() {
@@ -16,7 +14,7 @@ class Wish {
     if (id != null) {
       map['id'] = id;
     }
-    map['content'] = _content;
+    map['content'] = content;
 
     return map;
   }
