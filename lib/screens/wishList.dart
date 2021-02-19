@@ -1,5 +1,6 @@
 import 'package:flint_project/models/wishModel.dart';
 import 'package:flint_project/screens/forms/editForm.dart';
+import 'package:flint_project/screens/forms/sendSMSForm.dart';
 import 'package:flint_project/utils/services/wishService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,13 +55,20 @@ class _WishListState extends State<WishList> {
                           }),
                       trailing: IconButton(
                         icon: Icon(Icons.send),
-                        onPressed: () {}, //TODO:add popup to send
+                        onPressed: () {
+                          return showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SMSForm(list[index]);
+                            },
+                          );
+                        }, //TODO:add popup to send
                       ),
                       onTap: () {
                         return showDialog(
                           context: context,
                           builder: (context) {
-                            return EditForm(id: i);
+                            // return EditForm(id: i);
                           },
                         );
                       },

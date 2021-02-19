@@ -23,7 +23,7 @@ class AddForm extends StatelessWidget {
                   controller: wishController,
                   decoration: InputDecoration(hintText: 'Enter wish'),
                   validator: (content) {
-                    if (content.isEmpty || content.length < 3)
+                    if (content.length < 3)
                       return 'Wish must be at least 3 characters long.';
                     return null;
                   },
