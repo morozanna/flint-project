@@ -1,4 +1,5 @@
 import 'package:flint_project/screens/forms/addForm.dart';
+import 'package:flint_project/screens/forms/login_form.dart';
 import 'package:flint_project/screens/wishList.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,19 @@ class _WishesScreenState extends State<WishesScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Wishes List'),
+          actions: <Widget>[
+            FlatButton(
+                textColor: Colors.white,
+                onPressed: () {
+                  return showDialog(
+                    context: context,
+                    builder: (context) {
+                      return LoginForm();
+                    },
+                  );
+                },
+                child: Text("Login"))
+          ],
         ),
         body: WishList(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
