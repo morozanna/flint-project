@@ -1,5 +1,9 @@
+import 'package:flint_project/models/historyModel.dart';
 import 'package:flint_project/models/wishModel.dart';
+import 'package:flint_project/utils/services/historyService.dart';
+import 'package:flint_project/utils/services/wishService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SMSForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -28,7 +32,8 @@ class SMSForm extends StatelessWidget {
                 controller: numberController,
                 decoration: InputDecoration(hintText: 'Enter phone number'),
                 validator: (number) {
-                  if (number.length != 9) return 'Invalid phone number';
+                  if (!number.contains(new RegExp(r'\d{9}')))
+                    return 'Invalid phone number';
                   return null;
                 },
               ),
@@ -46,7 +51,17 @@ class SMSForm extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
+                      var _wishService =
+                          Provider.of<WishService>(context, listen: false);
+                      var _wish = _wishService.getDocRef(wish.id);
+                      var service =
+                          Provider.of<HistoryService>(context, listen: false);
+                      service.addHistory(History(
+                          dateSend: new DateTime.now(),
+                          phoneNr: int.parse(numberController.text),
+                          wishRef: _wish));
                       //TODO:add send sms function
+
                       Navigator.of(context).pop();
                     }
                   },
