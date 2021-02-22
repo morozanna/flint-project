@@ -30,10 +30,11 @@ class SMSForm extends StatelessWidget {
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
               TextFormField(
                 controller: numberController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(hintText: 'Enter phone number'),
                 validator: (number) {
-                  if (!number.contains(new RegExp(r'\d{9}')))
-                    return 'Invalid phone number';
+                  if (number.isEmpty || number.length != 9)
+                    return 'Phone number must have 9 digits';
                   return null;
                 },
               ),
