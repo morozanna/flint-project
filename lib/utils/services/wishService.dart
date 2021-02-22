@@ -11,6 +11,10 @@ class WishService extends ChangeNotifier {
     return Wish.fromMap(snap.data());
   }
 
+  DocumentReference getDocRef(String id) {
+    return _db.collection(collectionName).doc(id);
+  }
+
   Future<List<Wish>> getWishes() async {
     final List<Wish> list = [];
     await _db.collection(collectionName).get().then((querySnapshot) {
