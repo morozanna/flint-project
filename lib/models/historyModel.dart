@@ -11,7 +11,8 @@ class History {
   History.fromMap(dynamic obj) {
     this.id = obj['id'];
     this.phoneNr = obj['phoneNr'];
-    this.dateSend = obj['dateSend'];
+    Timestamp timestamp = obj['dateSend'];
+    this.dateSend = DateTime.parse(timestamp.toDate().toString());
     this.wishRef = obj['wish'];
   }
 
