@@ -1,5 +1,6 @@
 import 'package:flint_project/screens/forms/addForm.dart';
 import 'package:flint_project/screens/forms/login_form.dart';
+import 'package:flint_project/screens/historyScreen.dart';
 import 'package:flint_project/screens/wishList.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,13 @@ class _WishesScreenState extends State<WishesScreen> {
                 children: <Widget>[
                   FloatingActionButton(
                     heroTag: 'historyBtn',
-                    onPressed: () {},
+                    onPressed: () {
+                      return showDialog(
+                          context: context,
+                          builder: (context) {
+                            return HistoryView();
+                          });
+                    },
                     tooltip: 'Show history',
                     child: Icon(Icons.history),
                   ),
