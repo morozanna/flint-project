@@ -1,3 +1,4 @@
+import 'package:flint_project/utils/auth/authService.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatelessWidget {
@@ -40,8 +41,16 @@ class LoginForm extends StatelessWidget {
                   },
                 ),
                 ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {}
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        var auth = Authentication();
+                        String result = await auth.login(
+                            emailController.text, passwordController.text);
+                        if (result.startsWith('Error:'))
+                          print(result);
+                        else
+                          Navigator.of(context).pop();
+                      }
                     },
                     child: Text(
                       'Login',

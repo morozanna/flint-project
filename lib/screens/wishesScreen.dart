@@ -2,6 +2,7 @@ import 'package:flint_project/screens/forms/addForm.dart';
 import 'package:flint_project/screens/forms/login_form.dart';
 import 'package:flint_project/screens/historyScreen.dart';
 import 'package:flint_project/screens/wishList.dart';
+import 'package:flint_project/utils/auth/authService.dart';
 import 'package:flutter/material.dart';
 
 class WishesScreen extends StatefulWidget {
@@ -14,21 +15,33 @@ class WishesScreen extends StatefulWidget {
 class _WishesScreenState extends State<WishesScreen> {
   @override
   Widget build(BuildContext context) {
+    var _auth = Authentication();
+    var _user = _auth.getUser();
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Wishes List'),
           actions: <Widget>[
             FlatButton(
-                textColor: Colors.white,
-                onPressed: () {
+              textColor: Colors.white,
+              onPressed: () {
+                if (_user == null) {
                   return showDialog(
                     context: context,
                     builder: (context) {
                       return LoginForm();
                     },
                   );
-                },
-                child: Text("Login"))
+                } else
+                  _auth.logout();
+              },
+              child: Text(
+                () {
+                  if (_user != null) return 'Logout';
+                  return 'Login';
+                }(),
+              ),
+            )
           ],
         ),
         body: WishList(),
