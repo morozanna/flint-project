@@ -46,9 +46,25 @@ class LoginForm extends StatelessWidget {
                         var auth = Authentication();
                         String result = await auth.login(
                             emailController.text, passwordController.text);
-                        if (result.startsWith('Error:'))
-                          print(result);
-                        else
+                        if (result.startsWith('Error:')) {
+                          return showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Error'),
+                                  content:
+                                      Text(result.replaceFirst('Error: ', '')),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Try again'))
+                                  ],
+                                );
+                              });
+                        } else
                           Navigator.of(context).pop();
                       }
                     },

@@ -17,8 +17,10 @@ class Authentication {
         error = 'Error: No user found for that email.';
       } else if (e.code == 'wrong-password') {
         error = 'Error: Wrong password provided for that user.';
+      } else if (e.code == 'invalid-email') {
+        error = 'Error: Invalid e-mail';
       } else
-        error = "Error: " + e.code;
+        error = "Error: " + e.code.toString().replaceAll('-', ' ');
     }
     if (error != null) {
       return error;
