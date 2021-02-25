@@ -20,69 +20,95 @@ class _WishesScreenState extends State<WishesScreen> {
     //var _user = _auth.getUser();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Wishes List'),
-          actions: <Widget>[
-            FlatButton(
-              textColor: Colors.white,
-              onPressed: () {
-                if (_auth.getUser() == null) {
-                  return showDialog(
+      appBar: AppBar(
+        title: Text('Wishes List'),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.white,
+            onPressed: () {
+              if (_auth.getUser() == null) {
+                return showDialog(
+                  context: context,
+                  builder: (context) {
+                    return LoginForm();
+                  },
+                );
+              } else
+                _auth.logout();
+            },
+            child: Text(
+              () {
+                if (_auth.getUser() != null)
+                  return 'Logout';
+                else
+                  return 'Login';
+              }(),
+            ),
+          )
+        ],
+      ),
+      body: WishList(),
+      persistentFooterButtons: [
+        FlatButton(
+          onPressed: () {
+            if (_auth.getUser() != null) {
+              return showDialog(
+                context: context,
+                builder: (context) {
+                  return AddForm();
+                },
+              );
+            } else {
+              return showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Forbidden action'),
+                      content: Text("Only admin can access this function."),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Cancel'))
+                      ],
+                    );
+                  });
+            }
+          },
+          child: Icon(Icons.add),
+          // color: Colors.grey,
+        ),
+        FlatButton(
+            onPressed: () {
+              if (_auth.getUser() != null) {
+                return showDialog(
                     context: context,
                     builder: (context) {
-                      return LoginForm();
-                    },
-                  );
-                } else
-                  _auth.logout();
-              },
-              child: Text(
-                () {
-                  if (_auth.getUser() != null)
-                    return 'Logout';
-                  else
-                    return 'Login';
-                }(),
-              ),
-            )
-          ],
-        ),
-        body: WishList(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FloatingActionButton(
-                    heroTag: 'historyBtn',
-                    onPressed: () {
-                      return showDialog(
-                          context: context,
-                          builder: (context) {
-                            return HistoryView();
-                          });
-                    },
-                    tooltip: 'Show history',
-                    child: Icon(Icons.history),
-                  ),
-                  FloatingActionButton(
-                    heroTag: 'addBtn',
-                    onPressed: () {
-                      return showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AddForm();
-                        },
+                      return HistoryView();
+                    });
+              } else {
+                return showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Forbidden action'),
+                        content: Text("Only admin can access this function."),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Cancel'))
+                        ],
                       );
-                    },
-                    tooltip: 'Add new wish',
-                    child: Icon(Icons.add),
-                  ),
-                ],
-              ),
-            )));
+                    });
+              }
+            },
+            child: Icon(Icons.history))
+      ],
+    );
   }
 }

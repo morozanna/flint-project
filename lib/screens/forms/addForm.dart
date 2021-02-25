@@ -10,37 +10,55 @@ class AddForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('Add new wish'),
+      ),
       body: Container(
         child: Form(
             key: _formKey,
             child: Column(
               children: [
-                Text(
-                  'Add new wish:',
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                ),
-                TextFormField(
-                  controller: wishController,
-                  decoration: InputDecoration(hintText: 'Enter wish'),
-                  validator: (content) {
-                    if (content.length < 3)
-                      return 'Wish must be at least 3 characters long.';
-                    return null;
-                  },
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        var service =
-                            Provider.of<WishService>(context, listen: false);
-                        service.addWish(Wish(content: wishController.text));
-                        Navigator.of(context).pop();
-                      }
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextFormField(
+                    controller: wishController,
+                    decoration: InputDecoration(hintText: 'Enter wish'),
+                    validator: (content) {
+                      if (content.length < 3)
+                        return 'Wish must be at least 3 characters long.';
+                      return null;
                     },
-                    child: Text(
-                      'Add',
-                      style: TextStyle(fontSize: 22),
-                    ))
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child:
+                              Text('Cancel', style: TextStyle(fontSize: 22))),
+                      ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              var service = Provider.of<WishService>(context,
+                                  listen: false);
+                              service
+                                  .addWish(Wish(content: wishController.text));
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          child: Text(
+                            'Add',
+                            style: TextStyle(fontSize: 22),
+                          )),
+                    ],
+                  ),
+                ),
               ],
             )),
       ),
