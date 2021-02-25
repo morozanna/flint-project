@@ -1,5 +1,6 @@
 import 'package:flint_project/utils/auth/authService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -43,7 +44,8 @@ class LoginForm extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        var auth = Authentication();
+                        var auth =
+                            Provider.of<Authentication>(context, listen: false);
                         String result = await auth.login(
                             emailController.text, passwordController.text);
                         if (result.startsWith('Error:')) {

@@ -4,6 +4,7 @@ import 'package:flint_project/screens/historyScreen.dart';
 import 'package:flint_project/screens/wishList.dart';
 import 'package:flint_project/utils/auth/authService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WishesScreen extends StatefulWidget {
   WishesScreen({Key key}) : super(key: key);
@@ -15,8 +16,8 @@ class WishesScreen extends StatefulWidget {
 class _WishesScreenState extends State<WishesScreen> {
   @override
   Widget build(BuildContext context) {
-    var _auth = Authentication();
-    var _user = _auth.getUser();
+    var _auth = Provider.of<Authentication>(context);
+    //var _user = _auth.getUser();
 
     return Scaffold(
         appBar: AppBar(
@@ -25,7 +26,7 @@ class _WishesScreenState extends State<WishesScreen> {
             FlatButton(
               textColor: Colors.white,
               onPressed: () {
-                if (_user == null) {
+                if (_auth.getUser() == null) {
                   return showDialog(
                     context: context,
                     builder: (context) {
@@ -37,8 +38,10 @@ class _WishesScreenState extends State<WishesScreen> {
               },
               child: Text(
                 () {
-                  if (_user != null) return 'Logout';
-                  return 'Login';
+                  if (_auth.getUser() != null)
+                    return 'Logout';
+                  else
+                    return 'Login';
                 }(),
               ),
             )
