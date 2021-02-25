@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 
-class Authentication {
+class Authentication extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<String> login(String email, String password) async {
@@ -25,11 +26,15 @@ class Authentication {
     if (error != null) {
       return error;
     }
+    notifyListeners();
+
     return user.uid;
   }
 
   Future<void> logout() async {
-    return await _auth.signOut();
+    var result = await _auth.signOut();
+    notifyListeners();
+    return result;
   }
 
   User getUser() {

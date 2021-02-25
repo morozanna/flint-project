@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flint_project/screens/wishesScreen.dart';
+import 'package:flint_project/utils/auth/authService.dart';
 import 'package:flint_project/utils/services/historyService.dart';
 import 'package:flint_project/utils/services/wishService.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider(
                 create: (context) => HistoryService(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => Authentication(),
               )
             ],
             child: MaterialApp(
