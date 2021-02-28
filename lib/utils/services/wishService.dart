@@ -8,7 +8,10 @@ class WishService extends ChangeNotifier {
 
   Future<Wish> getWish(String id) async {
     var snap = await _db.collection(collectionName).doc(id).get();
-    return Wish.fromMap(snap.data());
+    if (snap.data() != null)
+      return Wish.fromMap(snap.data());
+    else
+      return null;
   }
 
   DocumentReference getDocRef(String id) {
@@ -53,7 +56,7 @@ class WishService extends ChangeNotifier {
     return result;
   }
 
-  Future deleteWish(String id) async {
+  Future deleteWish({String id}) async {
     var result = await _db.collection(collectionName).doc(id).delete();
     notifyListeners();
 

@@ -13,7 +13,11 @@ class HistoryService extends ChangeNotifier {
 
   Future<List<History>> getAllHistory() async {
     final List<History> list = [];
-    await _db.collection(collectionName).get().then((querySnapshot) {
+    await _db
+        .collection(collectionName)
+        .orderBy('dateSend', descending: true)
+        .get()
+        .then((querySnapshot) {
       querySnapshot.docs.forEach((element) {
         var history = History.fromMap(element.data());
         list.add(history);
