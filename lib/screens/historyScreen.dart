@@ -67,8 +67,11 @@ class _HistoryViewState extends State<HistoryView> {
                                       if (snapshot.connectionState ==
                                           ConnectionState.done) {
                                         Wish w = snapshot.data;
-                                        return Text(
-                                            "selected wish: " + w.content);
+                                        if (w != null)
+                                          return Text(
+                                              "selected wish: " + w.content);
+                                        else
+                                          return Text("[deleted wish]");
                                       }
                                       return Container();
                                     },
