@@ -1,6 +1,7 @@
 import 'package:flint_project/models/wishModel.dart';
 import 'package:flint_project/screens/forms/editForm.dart';
 import 'package:flint_project/screens/forms/sendSMSForm.dart';
+import 'package:flint_project/utils/auth/authService.dart';
 import 'package:flint_project/utils/services/wishService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,25 +54,7 @@ class _WishListState extends State<WishList> {
                             }
                             return Container();
                           }),
-                      trailing: IconButton(
-                        icon: Icon(Icons.send),
-                        onPressed: () {
-                          return showDialog(
-                            context: context,
-                            builder: (context) {
-                              return SMSForm(list[index]);
-                            },
-                          );
-                        }, //TODO:add popup to send
-                      ),
-                      onTap: () {
-                        return showDialog(
-                          context: context,
-                          builder: (context) {
-                            // return EditForm(id: i);
-                          },
-                        );
-                      },
+                      trailing: getButtons(list, index, service),
                     ),
                   );
                 },
@@ -82,5 +65,51 @@ class _WishListState extends State<WishList> {
         );
       }),
     );
+  }
+
+  Widget getButtons(List list, int index, WishService service) {
+    var _auth = Provider.of<Authentication>(context);
+    Wish wish = list[index];
+    if (_auth.getUser() != null) {
+      return Row(mainAxisSize: MainAxisSize.min, children: [
+        IconButton(
+          icon: Icon(Icons.send),
+          onPressed: () {
+            return showDialog(
+              context: context,
+              builder: (context) {
+                return SMSForm(wish);
+              },
+            );
+          },
+        ),
+        IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () async {
+              await service.deleteWish(id: wish.id);
+            }),
+        IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) {
+                    return EditForm(id: wish.id);
+                  });
+            }),
+      ]);
+    } else {
+      return IconButton(
+        icon: Icon(Icons.send),
+        onPressed: () {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return SMSForm(wish);
+            },
+          );
+        },
+      );
+    }
   }
 }
