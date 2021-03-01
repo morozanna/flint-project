@@ -68,6 +68,8 @@ class _WishesScreenState extends State<WishesScreen> {
                       content: Text("Only admin can access this function."),
                       actions: [
                         TextButton(
+                            style: TextButton.styleFrom(
+                                primary: Colors.deepPurple[300]),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
@@ -98,6 +100,8 @@ class _WishesScreenState extends State<WishesScreen> {
                         content: Text("Only admin can access this function."),
                         actions: [
                           TextButton(
+                              style: TextButton.styleFrom(
+                                  primary: Colors.deepPurple[300]),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },

@@ -36,7 +36,7 @@ class _WishListState extends State<WishList> {
                   var i = list[index].id;
                   Wish _wish;
                   return Card(
-                    color: Colors.blueGrey[300],
+                    color: Colors.blueGrey[800],
                     elevation: 20,
                     child: ListTile(
                       contentPadding: EdgeInsets.all(10),
