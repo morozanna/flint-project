@@ -40,7 +40,7 @@ class _HistoryViewState extends State<HistoryView> {
                       History _history;
                       String _wish_id;
                       return Card(
-                        color: Colors.blueGrey[300],
+                        color: Colors.blueGrey[800],
                         elevation: 20,
                         child: FutureBuilder(
                           future: service.getHistory(i).then((history) {
@@ -54,8 +54,8 @@ class _HistoryViewState extends State<HistoryView> {
                             if (snapshot.connectionState ==
                                 ConnectionState.done) {
                               return ListTile(
-                                contentPadding: EdgeInsets.all(20),
-                                subtitle: Consumer<WishService>(
+                                contentPadding: EdgeInsets.all(13),
+                                title: Consumer<WishService>(
                                     builder: (context, wishService, child) {
                                   var _wish = wishService.getWish(_wish_id);
                                   return FutureBuilder(
@@ -69,18 +69,27 @@ class _HistoryViewState extends State<HistoryView> {
                                         Wish w = snapshot.data;
                                         if (w != null)
                                           return Text(
-                                              "selected wish: " + w.content);
+                                            "selected wish: \n" + w.content,
+                                            textAlign: TextAlign.center,
+                                          );
                                         else
-                                          return Text("[deleted wish]");
+                                          return Text(
+                                            "[deleted wish]",
+                                            textAlign: TextAlign.center,
+                                          );
                                       }
                                       return Container();
                                     },
                                   );
                                 }),
                                 leading: Text(
-                                    "sent to: " + _history.phoneNr.toString()),
-                                title: Text(
-                                    "sent at: " + _history.dateSend.toString()),
+                                  "sent to:\n\n" + _history.phoneNr.toString(),
+                                  textAlign: TextAlign.center,
+                                ),
+                                subtitle: Text(
+                                  "sent at: " + _history.dateSend.toString(),
+                                  textAlign: TextAlign.center,
+                                ),
                               );
                             }
                             return Container();

@@ -16,6 +16,7 @@ class SMSForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text('Send wish'),
@@ -29,12 +30,19 @@ class SMSForm extends StatelessWidget {
               children: [
                 Text(
                   'Selected wish:',
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headline1,
                 ),
-                Text(wish.content),
-                Text('Send to:',
-                    style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+                SizedBox(height: 20),
+                Text(
+                  wish.content,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Send to:',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: numberController,
                   keyboardType: TextInputType.number,
@@ -45,9 +53,12 @@ class SMSForm extends StatelessWidget {
                     return null;
                   },
                 ),
-                Text('From:',
-                    style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+                SizedBox(height: 20),
+                Text(
+                  'From:',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: fromController,
                   decoration: InputDecoration(hintText: 'Enter your name'),
@@ -57,6 +68,7 @@ class SMSForm extends StatelessWidget {
                     return null;
                   },
                 ),
+                SizedBox(height: 20),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(

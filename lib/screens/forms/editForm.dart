@@ -26,41 +26,60 @@ class EditForm extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           var wishController = TextEditingController(text: wish.content);
           return Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text('Edit wish'),
+            ),
             body: Container(
-              child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Text(
-                        'Edit wish:',
-                        style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
-                      ),
-                      TextFormField(
-                        controller: wishController,
-                        decoration: InputDecoration(hintText: 'Enter wish'),
-                        validator: (content) {
-                          if (content.isEmpty || content.length < 3)
-                            return 'Wish must be at least 3 characters long.';
-                          return null;
-                        },
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              wish.content = wishController.text;
-                              var service = Provider.of<WishService>(context,
-                                  listen: false);
-                              service.editWish(wish);
-                              Navigator.of(context).pop();
-                            }
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: wishController,
+                          decoration: InputDecoration(hintText: 'Enter wish'),
+                          maxLines: null,
+                          validator: (content) {
+                            if (content.isEmpty || content.length < 3)
+                              return 'Wish must be at least 3 characters long.';
+                            return null;
                           },
-                          child: Text(
-                            'Edit',
-                            style: TextStyle(fontSize: 22),
-                          ))
-                    ],
-                  )),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancel',
+                                          style: TextStyle(fontSize: 22))),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState.validate()) {
+                                          wish.content = wishController.text;
+                                          var service =
+                                              Provider.of<WishService>(context,
+                                                  listen: false);
+                                          service.editWish(wish);
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
+                                      child: Text(
+                                        'Edit',
+                                        style: TextStyle(fontSize: 22),
+                                      ))
+                                ]))
+                      ],
+                    )),
+              ),
             ),
           );
         }
